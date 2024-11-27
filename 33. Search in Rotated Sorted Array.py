@@ -2,19 +2,20 @@ class Solution:
     def search(self, nums: List[int], target: int) -> int:
         low, high = 0, len(nums)-1
         while low <= high:
-            mid = low+(high-low)//2
+            mid = low + (high-low)//2
             if nums[mid] == target:
                 return mid
-
-            # check for sorted side
-            if nums[low] <= nums[mid]:
-                if target >= nums[low] and target <= nums[mid]:
-                    high = mid-1
-                else:
-                    low = mid+1
             else:
-                if target >= nums[mid] and target <= nums[high]:
-                    low = mid+1
+                # search for sorted side
+                if nums[low] <= nums[mid]:
+                    if nums[low] <= target and target <= nums[mid]:
+                        high = mid-1
+                    else:
+                        low = mid+1
                 else:
-                    high = mid-1
+                    if nums[mid] <= target and target <= nums[high]:
+                        low = mid+1
+                    else:
+                        high = mid-1
         return -1
+                        
